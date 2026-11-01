@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: release-risk-analyzer
+    runtime: python
+    plan: free
+    rootDir: ml
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: llama-3.3-70b-versatile
+      - key: GITHUB_PERSONAL_ACCESS_TOKEN
+        sync: false
